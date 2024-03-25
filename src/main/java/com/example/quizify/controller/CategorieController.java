@@ -38,7 +38,7 @@ public class CategorieController {
 	
 	@PutMapping("{id}")
 	public void update(@PathVariable Integer id, @RequestBody @Valid CategorieDto categorieUpdate) {
-	serviceCategorie.modifierCategorie(categorieUpdate, id);
+		serviceCategorie.modifierCategorie(categorieUpdate, id);
 	}
 	
 	@DeleteMapping("{id}")
