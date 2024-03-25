@@ -27,7 +27,7 @@ public class CategorieController {
 	
 	//4 verbes HTTP
 	@GetMapping
-	public List<CategorieDto> getAllByLibelle(@PathVariable Integer id) throws Exception {
+	public List<CategorieDto> getAllByLibelle() { //path variable et trhrows pas nécessaire
 		return serviceCategorie.getAll();	
 	}
 	
