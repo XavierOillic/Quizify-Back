@@ -31,7 +31,7 @@ public class CategorieController {
 		return serviceCategorie.getAll();	
 	}
 	
-	@PostMapping("{id}")
+	@PostMapping
 	public void add(@RequestBody @Valid CategorieDto categorieDto) {
 		serviceCategorie.ajouterCategorie(categorieDto);
 	}
