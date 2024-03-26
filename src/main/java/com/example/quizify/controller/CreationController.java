@@ -7,21 +7,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.quizify.service.ServiceStats;
-import com.example.quizify.service.dto.StatsDto;
+import com.example.quizify.service.ServiceCreation;
+import com.example.quizify.service.dto.CreationDto;
 
 @RestController
-@RequestMapping("/api/stats")
-public class StatsController {
+@RequestMapping("/api/creation")
+public class CreationController {
 	
-	@Autowired(required = true)
-	private ServiceStats serviceStats;
+@Autowired
+private ServiceCreation serviceCreation;
 
-	
-	
-	//4 verbes HTTP
-	@GetMapping
-	public List<StatsDto> getStats(){
-		return serviceStats.getAllStats();
-	}
+@GetMapping
+public List<CreationDto> getStats(){
+	return serviceCreation.getAllCreation();
 }
+
+}
+
+
