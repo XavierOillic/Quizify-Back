@@ -1,6 +1,7 @@
 package com.example.quizify.service.dto;
 
 import com.example.quizify.model.Question;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
@@ -11,3 +12,4 @@ public class ReponseDto {
 	private Question question;
 	private Boolean isCorrect;
 }
+
