@@ -14,16 +14,16 @@ import lombok.RequiredArgsConstructor;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)//proteger constructeur mais accessible jp
 @RequiredArgsConstructor
-public class Stats {
-
+public class Creation {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Integer id;
 	
 	@NonNull
-		private String libelle;
+	private Integer nbCategorie;
 	
 	@NonNull
-		private float score;
-	
+	private Integer nbQuestion;
+
 }

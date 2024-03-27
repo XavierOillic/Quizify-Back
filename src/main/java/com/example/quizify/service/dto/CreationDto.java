@@ -1,11 +1,10 @@
 package com.example.quizify.service.dto;
 
-
 import lombok.Data;
 
 @Data
-public class StatsDto {
+public class CreationDto {
 	private Integer id;
-	private String libelle;
-	private float score;
+	private Integer nbCategorie;
+	private Integer nbQuestion;
 }
