@@ -27,6 +27,11 @@ public class ServiceCategorieImpl implements ServiceCategorie{
 		List<CategorieDto> listeCategoriz = categoriz.stream().map(c -> modelMapper.map(c, CategorieDto.class)).collect(Collectors.toList());		
 ;		return listeCategoriz;
 	}
+	
+	@Override
+	public CategorieDto getById(Integer id) {
+		return modelMapper.map(categorieRepository.findById(id), CategorieDto.class);
+	}
 
 	@Override
 	public CategorieDto ajouterCategorie(CategorieDto categorieDto) {

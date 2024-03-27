@@ -3,6 +3,7 @@ package com.example.quizify.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.quizify.service.ServiceCategorie;
 import com.example.quizify.service.dto.CategorieDto;
@@ -29,6 +31,14 @@ public class CategorieController {
 	@GetMapping
 	public List<CategorieDto> getAllByLibelle() { //path variable et trhrows pas nécessaire
 		return serviceCategorie.getAll();	
+	}
+	
+	@GetMapping("{id}")
+	public CategorieDto getById(@PathVariable Integer id) {
+		CategorieDto cat = serviceCategorie.getById(id);
+		if (cat == null)
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		return cat;
 	}
 	
 	@PostMapping
