@@ -7,7 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.quizify.model.Question;
 import com.example.quizify.model.Reponse;
+import com.example.quizify.repository.QuestionRepository;
 import com.example.quizify.repository.ReponseRepository;
 import com.example.quizify.service.ServiceReponse;
 import com.example.quizify.service.dto.ReponseDto;
@@ -19,6 +21,9 @@ public class ServiceReponseImpl implements ServiceReponse {
 	private ReponseRepository repRepo;
 	
 	@Autowired
+	private QuestionRepository questionRepo;
+	
+	@Autowired
 	private ModelMapper modelMap;
 	
 	@Override
@@ -28,17 +33,28 @@ public class ServiceReponseImpl implements ServiceReponse {
 				.collect(Collectors.toList());
 		return listRep;
 	}
+	
+	@Override
+	public ReponseDto getById(Integer repId) {
+		return modelMap.map(repRepo.findById(repId), ReponseDto.class);
+	}
 
 	@Override
 	public ReponseDto ajouterReponse(ReponseDto repDTO) {
+		Question question = questionRepo.findById(repDTO.getQuestionId());
 		Reponse rep = modelMap.map(repDTO, Reponse.class);
+		rep.setQuestion(question);
 		return modelMap.map(repRepo.save(rep), ReponseDto.class);
 	}
 
 	@Override
 	public ReponseDto modifierReponse(ReponseDto repDTO, Integer repId) {
-		Reponse rep = modelMap.map(repDTO, Reponse.class);
-		rep.setId(repId);
+		Question q = questionRepo.findById(repDTO.getQuestionId());
+		Reponse rep = repRepo.findById(repId).orElseThrow();
+		
+		rep = modelMap.map(repDTO, Reponse.class);
+		rep.setQuestion(q);
+		
 		return modelMap.map(repRepo.save(rep), ReponseDto.class);
 	}
 

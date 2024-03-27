@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)//proteger constructeur mais accessible jp
 @RequiredArgsConstructor
 public class Reponse {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Integer id;
@@ -24,9 +25,9 @@ public class Reponse {
 		private String libelle;
 	
 	@NonNull
-	@ManyToOne
-		private Question question;
+		private Boolean isCorrect;
 	
 	@NonNull
-		private Boolean isCorrect;
+	@ManyToOne
+		private Question question;
 }

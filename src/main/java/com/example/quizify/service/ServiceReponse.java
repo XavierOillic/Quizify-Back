@@ -7,6 +7,8 @@ import com.example.quizify.service.dto.ReponseDto;
 public interface ServiceReponse {
 	//tout
 	List<ReponseDto> getAll();
+	//une seule
+	ReponseDto getById(Integer repId);
 	//ajouter
 	ReponseDto ajouterReponse(ReponseDto repDTO);
 	//modifier
