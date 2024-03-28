@@ -14,4 +14,6 @@ public interface ServiceCategorie {
 	//supprimer
 	void deleteCategorie(Integer categorieId);
 	
+	int countCategories();
+	
 }

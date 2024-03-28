@@ -16,4 +16,6 @@ public interface ServiceQuestion {
 	QuestionDto modifierQuestion (QuestionDto questionDto, Integer questionId);
 	//supprimer
 	void supprimerQuestion (Integer questionId);
+	
+	int countQuestions();
 }

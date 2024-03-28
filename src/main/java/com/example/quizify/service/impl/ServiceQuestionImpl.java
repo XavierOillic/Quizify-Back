@@ -63,6 +63,11 @@ public class ServiceQuestionImpl implements ServiceQuestion {
 		questionRepo.deleteById(questionId);
 
 	}
+	
+    @Override
+    public int countQuestions() {
+        return (int) questionRepo.count();
+    }
 
 	
 }
