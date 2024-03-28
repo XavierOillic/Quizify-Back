@@ -1,10 +1,13 @@
 package com.example.quizify.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +29,10 @@ public class Question {
 	
 	@NonNull
 	@ManyToOne
-		private Categorie categorie;
-	
+		private Categorie categorie;	
+		
+	@OneToMany 
+		private List<Reponse> reponses;//le tableau qui s'ajoute en plus dans mon get par id de question	 
+		
 }
+	

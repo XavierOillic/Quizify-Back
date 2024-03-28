@@ -9,16 +9,21 @@ import org.springframework.stereotype.Service;
 
 import com.example.quizify.model.Categorie;
 import com.example.quizify.model.Question;
+import com.example.quizify.model.Reponse;
 import com.example.quizify.repository.CategorieRepository;
 import com.example.quizify.repository.QuestionRepository;
+import com.example.quizify.repository.ReponseRepository;
 import com.example.quizify.service.ServiceQuestion;
+import com.example.quizify.service.dto.CategorieDto;
 import com.example.quizify.service.dto.QuestionDto;
+import com.example.quizify.service.dto.ReponseDto;
 
 @Service
 public class ServiceQuestionImpl implements ServiceQuestion {
 	
 	@Autowired QuestionRepository questionRepo;
 	@Autowired CategorieRepository categorieRepo;
+	@Autowired ReponseRepository reponseRepo;
 	@Autowired ModelMapper modelMapper;
 
 	@Override
@@ -31,8 +36,19 @@ public class ServiceQuestionImpl implements ServiceQuestion {
 	
 	@Override
 	public QuestionDto getOneById(Integer questionId) {
-		return modelMapper.map(questionRepo.findById(questionId), QuestionDto.class);
+		// get question by id 
+		Question questionUpdated = questionRepo.findById(questionId).orElseThrow();
+		// get reponses by question id 
+		List<Reponse> repUpdated = reponseRepo.findByQuestionId(questionUpdated.getId());// recup 4 rep associée à cette q°
+		// on rassemble les objets 
+		QuestionDto questionDto = modelMapper.map(questionUpdated, QuestionDto.class);
 		
+		questionDto.setReponse(repUpdated);
+		
+		return questionDto;		
+		/*
+		 * return modelMapper.map(questionRepo.findById(questionId), QuestionDto.class);
+		 */
 	}
 
 	@Override
@@ -61,8 +77,24 @@ public class ServiceQuestionImpl implements ServiceQuestion {
 	@Override
 	public void supprimerQuestion(Integer questionId) {
 		questionRepo.deleteById(questionId);
-
 	}
-
+	
+	
+	/*
+	 * @Override public DtoQuestionReponse ajouterQuestionReponse(DtoQuestionReponse
+	 * dtoQuestionReponse) { Categorie cat =
+	 * categorieRepo.findByLibelle(c.getCategorieLibelle()); Question questionAdd =
+	 * modelMapper.map(dtoQuestionReponse, Question.class); List<Reponse> repAdd =
+	 * modelMapper.map(dtoQuestionReponse, Reponse.class);
+	 * 
+	 * questionAdd.setCategorie(cat); questionAdd.setReponse(repAdd);
+	 * 
+	 * return modelMapper.map(questionRepo.save(questionAdd),
+	 * DtoQuestionReponse.class); }
+	 * 
+	 * @Override public DtoQuestionReponse ajouterQuestionReponse(DtoQuestionReponse
+	 * dtoQuestionReponse, QuestionDto quesDto, CategorieDto catDto, ReponseDto
+	 * repDto) { // TODO Auto-generated method stub return null; }
+	 */
 	
 }

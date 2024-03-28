@@ -30,8 +30,8 @@ public class QuestionController {
 	
 	@Autowired (required = true)
 	private ServiceQuestion serviceQuestion;
-	@Autowired private 
-	ServiceCategorie serviceCategorie;
+	@Autowired 
+	private ServiceCategorie serviceCategorie;
 	
 	//GET ONE
 	@GetMapping("/{questionId}")
