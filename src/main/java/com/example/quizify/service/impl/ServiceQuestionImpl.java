@@ -98,6 +98,10 @@ public class ServiceQuestionImpl implements ServiceQuestion {
 
 	@Override
 	public void supprimerQuestion(Integer questionId) {
+		List<Reponse> listReponses = reponseRepo.findByQuestion(questionRepo.findById(questionId).orElseThrow());
+		for (Reponse rep : listReponses) {
+			reponseRepo.deleteById(rep.getId());
+		}
 		questionRepo.deleteById(questionId);
 	}
 	
