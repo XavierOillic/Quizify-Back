@@ -9,6 +9,8 @@ public interface ServiceReponse {
 	List<ReponseDto> getAll();
 	//une seule
 	ReponseDto getById(Integer repId);
+	//par question
+	List<ReponseDto> getByQuestion(Integer questionId);
 	//ajouter
 	ReponseDto ajouterReponse(ReponseDto repDTO);
 	//modifier

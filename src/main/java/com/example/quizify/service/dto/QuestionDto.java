@@ -17,6 +17,6 @@ public class QuestionDto {
 	@JsonProperty("categorie")
 	private String categorieLibelle; //Parce que la question contient une categorie
 	
-	private List<Reponse> reponse;
+	private List<Reponse> reponses;
 	
 }

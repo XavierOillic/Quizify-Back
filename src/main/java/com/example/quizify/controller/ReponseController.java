@@ -40,6 +40,14 @@ public class ReponseController {
 		return rep;
 	}
 	
+	@GetMapping("/reponse/{questionId}")
+	public List<ReponseDto> getByQuestion(@PathVariable Integer questionId) {
+		List<ReponseDto> result = serviceRep.getByQuestion(questionId);
+		if (result == null)
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		return result;
+	}
+	
 	@PostMapping
 	public void add(@RequestBody ReponseDto repDTO) {
 		serviceRep.ajouterReponse(repDTO);

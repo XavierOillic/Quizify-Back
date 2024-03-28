@@ -1,6 +1,7 @@
 package com.example.quizify.service.impl;
 
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -37,6 +38,13 @@ public class ServiceReponseImpl implements ServiceReponse {
 	@Override
 	public ReponseDto getById(Integer repId) {
 		return modelMap.map(repRepo.findById(repId), ReponseDto.class);
+	}
+	
+	@Override
+	public List<ReponseDto> getByQuestion(Integer questionId) {
+		List<Reponse> listReponse = repRepo.findByQuestion(questionRepo.findById(questionId).orElseThrow());
+		List<ReponseDto> allRep = listReponse.stream().map(r -> modelMap.map(r, ReponseDto.class)).collect(Collectors.toList());
+		return allRep;
 	}
 
 	@Override

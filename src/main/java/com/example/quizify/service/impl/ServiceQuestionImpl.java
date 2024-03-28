@@ -18,6 +18,8 @@ import com.example.quizify.service.dto.CategorieDto;
 import com.example.quizify.service.dto.QuestionDto;
 import com.example.quizify.service.dto.ReponseDto;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ServiceQuestionImpl implements ServiceQuestion {
 	
@@ -36,30 +38,50 @@ public class ServiceQuestionImpl implements ServiceQuestion {
 	
 	@Override
 	public QuestionDto getOneById(Integer questionId) {
+
 		// get question by id 
 		Question questionUpdated = questionRepo.findById(questionId).orElseThrow();
 		// get reponses by question id 
-		List<Reponse> repUpdated = reponseRepo.findByQuestionId(questionUpdated.getId());// recup 4 rep associée à cette q°
+		List<Reponse> repUpdated = reponseRepo.findByQuestion(questionRepo.findById(questionId).orElseThrow());// recup 4 rep associée à cette q°
 		// on rassemble les objets 
 		QuestionDto questionDto = modelMapper.map(questionUpdated, QuestionDto.class);
 		
-		questionDto.setReponse(repUpdated);
+		questionDto.setReponses(repUpdated);
 		
 		return questionDto;		
 		/*
 		 * return modelMapper.map(questionRepo.findById(questionId), QuestionDto.class);
 		 */
+		/*
+		 * return modelMapper.map(questionRepo.findById(questionId), QuestionDto.class);
+		 */
+	}
+	
+	@Override
+	public List<QuestionDto> getByCategorie(Integer catId) {
+		List<Question> listQuestion = questionRepo.findByCategorie(categorieRepo.findById(catId).orElseThrow());
+		List<QuestionDto>allQuestion = listQuestion.stream().map(q -> modelMapper.map(q, QuestionDto.class)).collect(Collectors.toList());
+		return allQuestion;
 	}
 
 	@Override
+	@Transactional
 	public QuestionDto ajouterQuestion(QuestionDto questionDto) {
 		Categorie category = categorieRepo.findByLibelle(questionDto.getCategorieLibelle());
 		//Je récupère la categorie via le Repo et son libelle présent dans le DTOPLANTE en String "categorieLibelle"
 		Question questionAdded = modelMapper.map(questionDto, Question.class);
 		//Je mappe la plante normale sur la dto
 		questionAdded.setCategorie(category);
+		List<Reponse> reponseAdded = questionAdded.getReponses();
+		Question questSave = questionRepo.save(questionAdded);			
 		
-		return modelMapper.map(questionRepo.save(questionAdded), QuestionDto.class);
+		 for (Reponse reponse : reponseAdded) { 
+			 Reponse modelReponse = modelMapper.map(reponse, Reponse.class);
+			 modelReponse.setQuestion(questSave);
+			 reponseRepo.save(modelReponse);
+			 }	  
+		
+		return modelMapper.map(questionRepo.findById(questSave.getId()), QuestionDto.class);
 		
 	}
 
@@ -79,7 +101,7 @@ public class ServiceQuestionImpl implements ServiceQuestion {
 		questionRepo.deleteById(questionId);
 	}
 	
-	
+
 	/*
 	 * @Override public DtoQuestionReponse ajouterQuestionReponse(DtoQuestionReponse
 	 * dtoQuestionReponse) { Categorie cat =
@@ -96,5 +118,8 @@ public class ServiceQuestionImpl implements ServiceQuestion {
 	 * dtoQuestionReponse, QuestionDto quesDto, CategorieDto catDto, ReponseDto
 	 * repDto) { // TODO Auto-generated method stub return null; }
 	 */
-	
+    @Override
+    public int countQuestions() {
+        return (int) questionRepo.count();
+    }
 }

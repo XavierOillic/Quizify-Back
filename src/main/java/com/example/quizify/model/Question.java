@@ -2,6 +2,7 @@ package com.example.quizify.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,7 +32,7 @@ public class Question {
 	@ManyToOne
 		private Categorie categorie;	
 		
-	@OneToMany 
+	@OneToMany
 		private List<Reponse> reponses;//le tableau qui s'ajoute en plus dans mon get par id de question	 
 		
 }

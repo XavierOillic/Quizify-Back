@@ -51,4 +51,9 @@ public class ServiceCategorieImpl implements ServiceCategorie{
 		categorieRepository.deleteById(categorieId);		
 	}
 	
+    @Override
+    public int countCategories() {
+        return (int) categorieRepository.count();
+    }
+	
 }
