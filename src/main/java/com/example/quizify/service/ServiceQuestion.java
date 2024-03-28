@@ -10,6 +10,8 @@ public interface ServiceQuestion {
 	List<QuestionDto> recupererTout();
 	//Get One
 	QuestionDto getOneById(Integer questionId);
+	//par categorie
+	List<QuestionDto> getByCategorie(Integer catId);
 	//ajouter
 	QuestionDto ajouterQuestion (QuestionDto questionDto);
 	//modifier

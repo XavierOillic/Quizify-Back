@@ -24,14 +24,9 @@ import com.example.quizify.service.dto.QuestionDto;
 @RestController
 
 public class QuestionController {
-	
-	@Autowired private QuestionRepository questionRepo;
-	@Autowired private CategorieRepository categorieRepo;
-	
+
 	@Autowired (required = true)
 	private ServiceQuestion serviceQuestion;
-	@Autowired private 
-	ServiceCategorie serviceCategorie;
 	
 	//GET ONE
 	@GetMapping("/{questionId}")
@@ -46,6 +41,15 @@ public class QuestionController {
 	@GetMapping
 	public List<QuestionDto> getAll(){
 		return serviceQuestion.recupererTout();
+	}
+	
+	//GET BY CATEGORIE
+	@GetMapping("/question/{categorieId}")
+	public List<QuestionDto> getByCategorie(@PathVariable Integer categorieId) {
+		List<QuestionDto> result = serviceQuestion.getByCategorie(categorieId);
+		if (result == null)
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		return result;
 	}
 	
 	//ADD

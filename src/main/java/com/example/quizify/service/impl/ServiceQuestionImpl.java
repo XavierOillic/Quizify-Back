@@ -32,7 +32,13 @@ public class ServiceQuestionImpl implements ServiceQuestion {
 	@Override
 	public QuestionDto getOneById(Integer questionId) {
 		return modelMapper.map(questionRepo.findById(questionId), QuestionDto.class);
-		
+	}
+	
+	@Override
+	public List<QuestionDto> getByCategorie(Integer catId) {
+		List<Question> listQuestion = questionRepo.findByCategorie(categorieRepo.findById(catId).orElseThrow());
+		List<QuestionDto>allQuestion = listQuestion.stream().map(q -> modelMapper.map(q, QuestionDto.class)).collect(Collectors.toList());
+		return allQuestion;
 	}
 
 	@Override
