@@ -7,6 +7,8 @@ import com.example.quizify.service.dto.CategorieDto;
 public interface ServiceCategorie {
 	//tout
 	List<CategorieDto> getAll();
+	//une
+	CategorieDto getById(Integer id);
 	//ajouter
 	CategorieDto ajouterCategorie(CategorieDto categorieDto);
 	//modifier
