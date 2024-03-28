@@ -7,4 +7,5 @@ import com.example.quizify.model.Categorie;
 public interface CategorieRepository extends JpaRepository<Categorie, Integer> {
 	Categorie findById(int id);
 	Categorie findByLibelle(String categorieLibelle);
+
 }

@@ -74,6 +74,10 @@ public class QuestionController {
 				serviceQuestion.supprimerQuestion(questionId);
 	}
 	
+    @GetMapping("/count")
+    public int countQuestions() {
+        return serviceQuestion.countQuestions();
+    }
 	
 	
 }
