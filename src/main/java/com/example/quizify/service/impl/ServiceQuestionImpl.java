@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.quizify.model.Categorie;
 import com.example.quizify.model.Question;
+import com.example.quizify.model.Reponse;
 import com.example.quizify.repository.CategorieRepository;
 import com.example.quizify.repository.QuestionRepository;
+import com.example.quizify.repository.ReponseRepository;
 import com.example.quizify.service.ServiceQuestion;
 import com.example.quizify.service.dto.QuestionDto;
 
@@ -19,6 +21,7 @@ public class ServiceQuestionImpl implements ServiceQuestion {
 	
 	@Autowired QuestionRepository questionRepo;
 	@Autowired CategorieRepository categorieRepo;
+	@Autowired ReponseRepository repRepo;
 	@Autowired ModelMapper modelMapper;
 
 	@Override
@@ -66,8 +69,11 @@ public class ServiceQuestionImpl implements ServiceQuestion {
 
 	@Override
 	public void supprimerQuestion(Integer questionId) {
+		List<Reponse> listReponses = repRepo.findByQuestion(questionRepo.findById(questionId).orElseThrow());
+		for (Reponse rep : listReponses) {
+			repRepo.deleteById(rep.getId());
+		}
 		questionRepo.deleteById(questionId);
-
 	}
 	
     @Override
